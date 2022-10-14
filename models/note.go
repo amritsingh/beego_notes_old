@@ -23,8 +23,10 @@ func (u *Note) TableName() string {
 func NotesGetAll() *[]*Note {
 	o := orm.NewOrm()
 	var notes []*Note
-	_, err := o.QueryTable(new(Note)).All(&notes)
+	// Documentation: https://github.com/beego/beedoc/blob/master/en-US/mvc/model/query.md
+	_, err := o.QueryTable(new(Note)).Filter("deleted_at__isnull", true).OrderBy("-updated_at").All(&notes)
 	if err != nil {
+		fmt.Println(err)
 		return nil
 	} else {
 		return &notes
@@ -55,6 +57,15 @@ func (note *Note) Update(name string, content string) {
 	o := orm.NewOrm()
 	note.Name = name
 	note.Content = content
+	_, err := o.Update(note)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (note *Note) MarkDelete() {
+	o := orm.NewOrm()
+	note.DeletedAt = time.Now()
 	_, err := o.Update(note)
 	if err != nil {
 		fmt.Println(err)

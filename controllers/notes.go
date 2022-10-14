@@ -15,7 +15,6 @@ type NotesController struct {
 
 func (c *NotesController) NotesIndex() {
 	notes := models.NotesGetAll()
-	fmt.Println(notes)
 	c.Data["notes"] = notes
 	c.TplName = "notes/index.tpl"
 }
@@ -65,5 +64,16 @@ func (c *NotesController) NotesUpdate() {
 	content := c.GetString("content")
 	note := models.NotesFind(id)
 	note.Update(name, content)
+	c.Redirect("/notes", http.StatusMovedPermanently)
+}
+
+func (c *NotesController) NotesDelete() {
+	idStr := c.Ctx.Input.Param(":id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+	}
+	note := models.NotesFind(id)
+	note.MarkDelete()
 	c.Redirect("/notes", http.StatusMovedPermanently)
 }

@@ -15,5 +15,5 @@ func init() {
 	beego.Router("/notes/:id([0-9]+)", &controllers.NotesController{}, "get:NotesShow")
 	beego.Router("/notes/edit/:id", &controllers.NotesController{}, "get:NotesEditForm")
 	beego.Router("/notes/:id([0-9]+)", &controllers.NotesController{}, "post:NotesUpdate")
-
+	beego.Router("/notes/:id", &controllers.NotesController{}, "delete:NotesDelete")
 }
