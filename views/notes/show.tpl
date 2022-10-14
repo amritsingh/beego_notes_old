@@ -6,5 +6,9 @@
                 <p class="card-text fs-6 fw-light">{{ .note.Content }}</p>
             </div>
         </div>
+
+        <p>
+            <a class="btn btn-outline-primary" href="/notes/edit/{{ .note.ID }}" role="button">Edit</a>
+        </p>
     {{ template "layouts/footer.tpl" }}
 {{ end }}
