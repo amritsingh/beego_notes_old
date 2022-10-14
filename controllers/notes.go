@@ -4,6 +4,7 @@ import (
 	"beego_notes/models"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -29,4 +30,16 @@ func (c *NotesController) NotesCreate() {
 
 	models.NotesCreate(name, content)
 	c.Redirect("/notes", http.StatusMovedPermanently)
+}
+
+func (c *NotesController) NotesShow() {
+	idStr := c.Ctx.Input.Param(":id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+	}
+	note := models.NotesFind(id)
+	fmt.Println(note)
+	c.Data["note"] = note
+	c.TplName = "notes/show.tpl"
 }

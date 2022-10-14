@@ -39,3 +39,14 @@ func NotesCreate(name string, content string) {
 	fmt.Println(id)
 	fmt.Println(err)
 }
+
+func NotesFind(id uint64) *Note {
+	o := orm.NewOrm()
+	note := Note{ID: id}
+	err := o.Read(&note)
+	if err != nil {
+		return nil
+	} else {
+		return &note
+	}
+}
