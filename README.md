@@ -17,3 +17,9 @@ bee generate migration create_notes_table
 ```
 bee run
 ```
+
+# Package to encrypt password
+
+```
+go get golang.org/x/crypto/bcrypt
+```

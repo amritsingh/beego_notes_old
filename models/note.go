@@ -11,6 +11,7 @@ type Note struct {
 	ID        uint64 `orm:"column(id)"`
 	Name      string
 	Content   string
+	UserID    uint64 `orm:"column(user_id)"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt time.Time

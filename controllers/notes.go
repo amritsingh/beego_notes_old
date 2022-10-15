@@ -13,6 +13,10 @@ type NotesController struct {
 	beego.Controller
 }
 
+func init() {
+	beego.InsertFilter("/notes/*", beego.BeforeRouter, AuthFilter)
+}
+
 func (c *NotesController) NotesIndex() {
 	notes := models.NotesGetAll()
 	c.Data["notes"] = notes

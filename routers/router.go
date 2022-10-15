@@ -16,4 +16,7 @@ func init() {
 	beego.Router("/notes/edit/:id", &controllers.NotesController{}, "get:NotesEditForm")
 	beego.Router("/notes/:id([0-9]+)", &controllers.NotesController{}, "post:NotesUpdate")
 	beego.Router("/notes/:id", &controllers.NotesController{}, "delete:NotesDelete")
+
+	beego.Router("/signup", &controllers.SessionsController{}, "get:SignupPage")
+	beego.Router("/login", &controllers.SessionsController{}, "get:LoginPage")
 }
