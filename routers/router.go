@@ -19,4 +19,7 @@ func init() {
 
 	beego.Router("/signup", &controllers.SessionsController{}, "get:SignupPage")
 	beego.Router("/login", &controllers.SessionsController{}, "get:LoginPage")
+	beego.Router("/signup", &controllers.SessionsController{}, "post:Signup")
+	beego.Router("/login", &controllers.SessionsController{}, "post:Login")
+	beego.Router("/logout", &controllers.SessionsController{}, "post:Logout")
 }

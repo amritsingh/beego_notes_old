@@ -18,7 +18,8 @@ func init() {
 }
 
 func (c *NotesController) NotesIndex() {
-	notes := models.NotesGetAll()
+	currUser := currentUser(c.Ctx)
+	notes := models.NotesGetAll(currUser)
 	c.Data["notes"] = notes
 	c.TplName = "notes/index.tpl"
 }
@@ -30,8 +31,9 @@ func (c *NotesController) NotesNewForm() {
 func (c *NotesController) NotesCreate() {
 	name := c.GetString("name")
 	content := c.GetString("content")
+	currUser := currentUser(c.Ctx)
 
-	models.NotesCreate(name, content)
+	models.NotesCreate(currUser, name, content)
 	c.Redirect("/notes", http.StatusMovedPermanently)
 }
 
@@ -41,7 +43,8 @@ func (c *NotesController) NotesShow() {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	note := models.NotesFind(id)
+	currUser := currentUser(c.Ctx)
+	note := models.NotesFind(currUser, id)
 	fmt.Println(note)
 	c.Data["note"] = note
 	c.TplName = "notes/show.tpl"
@@ -53,7 +56,8 @@ func (c *NotesController) NotesEditForm() {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	note := models.NotesFind(id)
+	currUser := currentUser(c.Ctx)
+	note := models.NotesFind(currUser, id)
 	c.Data["note"] = note
 	c.TplName = "notes/edit.tpl"
 }
@@ -66,7 +70,8 @@ func (c *NotesController) NotesUpdate() {
 	}
 	name := c.GetString("name")
 	content := c.GetString("content")
-	note := models.NotesFind(id)
+	currUser := currentUser(c.Ctx)
+	note := models.NotesFind(currUser, id)
 	note.Update(name, content)
 	c.Redirect("/notes", http.StatusMovedPermanently)
 }
@@ -77,7 +82,8 @@ func (c *NotesController) NotesDelete() {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	note := models.NotesFind(id)
+	currUser := currentUser(c.Ctx)
+	note := models.NotesFind(currUser, id)
 	note.MarkDelete()
 	c.Redirect("/notes", http.StatusMovedPermanently)
 }

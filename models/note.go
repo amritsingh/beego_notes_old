@@ -21,11 +21,11 @@ func (u *Note) TableName() string {
 	return "notes"
 }
 
-func NotesGetAll() *[]*Note {
+func NotesGetAll(user *User) *[]*Note {
 	o := orm.NewOrm()
 	var notes []*Note
 	// Documentation: https://github.com/beego/beedoc/blob/master/en-US/mvc/model/query.md
-	_, err := o.QueryTable(new(Note)).Filter("deleted_at__isnull", true).OrderBy("-updated_at").All(&notes)
+	_, err := o.QueryTable(new(Note)).Filter("user_id", user.ID).Filter("deleted_at__isnull", true).OrderBy("-updated_at").All(&notes)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -34,18 +34,18 @@ func NotesGetAll() *[]*Note {
 	}
 }
 
-func NotesCreate(name string, content string) {
+func NotesCreate(user *User, name string, content string) {
 	o := orm.NewOrm()
 	currTime := time.Now()
-	note := Note{Name: name, Content: content, CreatedAt: currTime, UpdatedAt: currTime}
+	note := Note{Name: name, Content: content, UserID: user.ID, CreatedAt: currTime, UpdatedAt: currTime}
 	id, err := o.Insert(&note)
 	fmt.Println(id)
 	fmt.Println(err)
 }
 
-func NotesFind(id uint64) *Note {
+func NotesFind(user *User, id uint64) *Note {
 	o := orm.NewOrm()
-	note := Note{ID: id}
+	note := Note{ID: id, UserID: user.ID}
 	err := o.Read(&note)
 	if err != nil {
 		return nil
