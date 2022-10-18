@@ -1,6 +1,6 @@
 {{ define "sessions/signup.tpl"}}                                                                                                                                                                                     
  
-{{ template "layouts/header.tpl" }} 
+{{ template "layouts/header.tpl" . }} 
 <div class="container-xl">
 <h1>Sign Up</h1>
  
@@ -21,6 +21,6 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
-{{ template "layouts/footer.tpl" }} 
+{{ template "layouts/footer.tpl" . }} 
  
 {{ end }}

@@ -1,6 +1,6 @@
 {{ define "sessions/login.tpl"}}                                                                                                                                                                                      
  
-{{ template "layouts/header.tpl" }} 
+{{ template "layouts/header.tpl" .}} 
  
 <div class="container-xl">
 <h1>Login</h1>

@@ -29,8 +29,8 @@
         
         <p>
             <div class="btn-group" role="group">
-                <a class="btn btn-outline-primary" href="/notes/edit/{{ .ID }}" role="button">Edit</a>
-                <a class="btn btn-outline-danger" href="/notes/{{ .ID }}" onclick="sendDelete(event, this.href)">Delete</a>
+                <a class="btn btn-outline-primary" href="/notes/edit/{{ .note.ID }}" role="button">Edit</a>
+                <a class="btn btn-outline-danger" href="/notes/{{ .note.ID }}" onclick="sendDelete(event, this.href)">Delete</a>
             </div>
         </p>
 

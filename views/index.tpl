@@ -10,7 +10,6 @@
     <div class="btn-group" role="group">
         {{if .email}}
             <form action="/logout" method="POST">
-                <!-- Logout - TBD -->
                 <button type="submit" class="btn btn-outline-danger">Logout</button>
             </form>
         {{else}}

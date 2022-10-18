@@ -23,7 +23,7 @@ type MainController struct {
 }
 
 func (c *MainController) Get() {
-	currUser := currentUser(c.Ctx)
+	currUser := c.currentUser()
 	if currUser != nil {
 		c.Data["email"] = currUser.Username
 	}
@@ -31,8 +31,6 @@ func (c *MainController) Get() {
 }
 
 var AuthFilter = func(ctx *context.Context) {
-	// session, _ := beego.GlobalSessions.SessionStart(ctx.ResponseWriter, ctx.Request)
-	// defer session.SessionRelease(ctx.ResponseWriter)
 	session := ctx.Input.CruSession
 
 	sessionID := session.Get("user_id")
@@ -45,20 +43,42 @@ var AuthFilter = func(ctx *context.Context) {
 			ctx.Abort(401, "Not authorized")
 		}
 	}
-
-	var idInterface interface{} = &(user.ID)
-	session.Set("user_id", idInterface)
 	session.Set("email", user.Username)
 }
 
-func currentUser(ctx *context.Context) *models.User {
-	session := ctx.Input.CruSession
-	sessionID := session.Get("user_id")
+func (contr *BaseController) currentUser() *models.User {
+	sessionID := contr.Session.Get("user_id")
 	var user *models.User
 	if sessionID != nil {
-		user = models.UserFind(sessionID.(uint64))
+		userID, _ := sessionID.(uint64)
+		user = models.UserFind(userID)
 	} else {
 		user = nil
 	}
 	return user
+}
+
+type FlashMessageType int
+
+const (
+	Error FlashMessageType = iota
+	Warning
+	Success
+	Notice
+)
+
+func flashMessage(contr *beego.Controller, messageType FlashMessageType, message string) *beego.FlashData {
+	flash := beego.NewFlash()
+	switch messageType {
+	case Error:
+		flash.Error(message)
+	case Warning:
+		flash.Warning(message)
+	case Success:
+		flash.Success(message)
+	case Notice:
+		flash.Notice(message)
+	}
+	flash.Store(contr)
+	return flash
 }

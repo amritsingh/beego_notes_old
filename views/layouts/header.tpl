@@ -20,4 +20,7 @@
 </head>
 
 <body>
+
+{{template "layouts/alert.tpl" .}}
+
 {{ end }}
