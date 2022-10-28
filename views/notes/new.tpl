@@ -1,5 +1,5 @@
 {{ define "notes/new.tpl" }}
-    {{ template "layouts/header.tpl" }}
+    {{ template "layouts/header.tpl" .}}
 
         <form class="row g-3" action="/notes" method="POST">
             <div class="mb-3">
@@ -13,5 +13,5 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    {{ template "layouts/footer.tpl" }}
+    {{ template "layouts/footer.tpl" . }}
 {{ end }}

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"beego_notes/models"
+	"net/http"
 
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/session"
@@ -36,11 +37,13 @@ var AuthFilter = func(ctx *context.Context) {
 	sessionID := session.Get("user_id")
 	var user *models.User
 	if sessionID == nil {
-		ctx.Abort(401, "Not authorized")
+		//ctx.Abort(401, "Not authorized")
+		ctx.Redirect(http.StatusPermanentRedirect, "/login")
 	} else {
 		user = models.UserFind(sessionID.(uint64))
 		if user.ID == 0 {
-			ctx.Abort(401, "Not authorized")
+			// ctx.Abort(401, "Not authorized")
+			ctx.Redirect(http.StatusPermanentRedirect, "/login")
 		}
 	}
 	session.Set("email", user.Username)

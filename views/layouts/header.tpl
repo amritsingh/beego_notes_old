@@ -21,6 +21,7 @@
 
 <body>
 
+{{template "layouts/navbar.tpl" .}}
 {{template "layouts/alert.tpl" .}}
 
 {{ end }}

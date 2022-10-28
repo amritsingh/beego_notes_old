@@ -14,18 +14,21 @@ type NotesController struct {
 }
 
 func init() {
-	beego.InsertFilter("/notes/*", beego.BeforeRouter, AuthFilter)
+	beego.InsertFilter("/notes*", beego.BeforeRouter, AuthFilter)
 }
 
 func (c *NotesController) NotesIndex() {
 	currUser := c.currentUser()
 	fmt.Println(currUser)
 	notes := models.NotesGetAll(currUser)
+	c.Data["email"] = currUser.Username
 	c.Data["notes"] = notes
 	c.TplName = "notes/index.tpl"
 }
 
 func (c *NotesController) NotesNewForm() {
+	currUser := c.currentUser()
+	c.Data["email"] = currUser.Username
 	c.TplName = "notes/new.tpl"
 }
 
@@ -47,6 +50,7 @@ func (c *NotesController) NotesShow() {
 	currUser := c.currentUser()
 	note := models.NotesFind(currUser, id)
 	fmt.Println(note)
+	c.Data["email"] = currUser.Username
 	c.Data["note"] = note
 	c.TplName = "notes/show.tpl"
 }
@@ -59,6 +63,7 @@ func (c *NotesController) NotesEditForm() {
 	}
 	currUser := c.currentUser()
 	note := models.NotesFind(currUser, id)
+	c.Data["email"] = currUser.Username
 	c.Data["note"] = note
 	c.TplName = "notes/edit.tpl"
 }
@@ -73,6 +78,7 @@ func (c *NotesController) NotesUpdate() {
 	content := c.GetString("content")
 	currUser := c.currentUser()
 	note := models.NotesFind(currUser, id)
+	c.Data["email"] = currUser.Username
 	note.Update(name, content)
 	c.Redirect("/notes", http.StatusMovedPermanently)
 }

@@ -1,5 +1,5 @@
 {{ define "notes/show.tpl" }}
-    {{ template "layouts/header.tpl" }}
+    {{ template "layouts/header.tpl" . }}
         <div class="card h-200">
             <div class="card-body">
                 <h5 class="card-title">{{ .note.Name }}</h5>
@@ -34,5 +34,5 @@
             </div>
         </p>
 
-    {{ template "layouts/footer.tpl" }}
+    {{ template "layouts/footer.tpl" . }}
 {{ end }}

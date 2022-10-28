@@ -1,5 +1,5 @@
 {{ define "notes/index.tpl" }}
-    {{ template "layouts/header.tpl" }}
+    {{ template "layouts/header.tpl" . }}
         <h2>All Notes<h2>
 
         <div class="row row-cols-1 row-cols-md-6 g-4">
@@ -22,5 +22,5 @@
             <a class="btn btn-outline-primary" href="/notes/new" role="button">New Note</a>
         </p>
 
-    {{ template "layouts/footer.tpl" }}
+    {{ template "layouts/footer.tpl" . }}
 {{ end }}

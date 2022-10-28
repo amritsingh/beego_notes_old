@@ -13,5 +13,5 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    {{ template "layouts/footer.tpl" }}
+    {{ template "layouts/footer.tpl" .}}
 {{ end }}
